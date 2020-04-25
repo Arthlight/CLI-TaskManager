@@ -16,5 +16,7 @@ var doCmd = &cobra.Command{
 	Long:  "If you have completed a task, you can check it off",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Fake command for \"do\"")
+		fmt.Println("This is the tasks you want to add: ", args)
+
 	},
 }

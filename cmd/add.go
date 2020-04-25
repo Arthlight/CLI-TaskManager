@@ -16,5 +16,6 @@ var addCmd = &cobra.Command{
 	Long:  "If you come up with a task to do, add it to your list",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Fake command for \"add\"")
+		fmt.Println("This is the tasks you want to add: ", args)
 	},
 }
