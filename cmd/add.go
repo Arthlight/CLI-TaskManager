@@ -1,9 +1,10 @@
 package cmd
 
 import (
+	"CLI-TaskManager/database"
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"strings"
 )
 
 func init() {
@@ -15,7 +16,8 @@ var addCmd = &cobra.Command{
 	Short: "add a task to your list",
 	Long:  "If you come up with a task to do, add it to your list",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Fake command for \"add\"")
-		fmt.Println("This is the tasks you want to add: ", args)
+		fmt.Println("in add.go")
+		database.AddTask(strings.Join(args, ""))
+		fmt.Println("back in add.go")
 	},
 }
