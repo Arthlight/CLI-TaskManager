@@ -16,8 +16,14 @@ var addCmd = &cobra.Command{
 	Short: "add a task to your list",
 	Long:  "If you come up with a task to do, add it to your list",
 	Run: func(cmd *cobra.Command, args []string) {
+		var sb strings.Builder
+		for _,s := range args {
+			sb.WriteString(s + " ")
+		}
+		task := strings.TrimRight(sb.String(), "\t \n")
 		fmt.Println("in add.go")
-		database.AddTask(strings.Join(args, ""))
+		fmt.Println(args)
+		database.AddTask(task)
 		fmt.Println("back in add.go")
 	},
 }

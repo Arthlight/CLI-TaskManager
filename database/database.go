@@ -25,7 +25,6 @@ func AddTask(s string) {
 		}
 	}()
 
-	fmt.Println("successfully connected to database in addTask in database.go")
 	err := handleTask(d, s)
 	if err != nil {
 		log.Fatal(err)
@@ -36,21 +35,14 @@ func AddTask(s string) {
 func handleTask(d *bolt.DB, s string) error {
 	fmt.Println("in handleTask in database.go")
 	err := d.Update(func(tx *bolt.Tx) error {
-		b, err := tx.CreateBucketIfNotExists([]byte("MyBucket"))
+		b, err := tx.CreateBucketIfNotExists([]byte("MyTasks"))
 		if err != nil {
 			return fmt.Errorf("create bucket: %s", err)
 		}
-		v := b.Get([]byte("Tasks"))
-		if v == nil {
-			err := updateTasks(d, s)
-			if err != nil {
-				return err
-			}
-		} else {
-			err := updateTasks(d, s + " " + string(v))
-			if err != nil {
-				return err
-			}
+		fmt.Println(s)
+		err = b.Put([]byte(s), []byte(s))
+		if err != nil {
+			return err
 		}
 		return nil
 	})
@@ -61,21 +53,34 @@ func handleTask(d *bolt.DB, s string) error {
 	return nil
 }
 
-
-func updateTasks(d *bolt.DB, s string) error {
-	fmt.Println("in updateTask in database.go")
+func DeleteTask(s string) {
+	d := connect()
 	err := d.Update(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte("MyBucket"))
-		err := b.Put([]byte("Tasks"), []byte(s))
+		b := tx.Bucket([]byte("MyTasks"))
+		err := b.Delete([]byte(s))
+		return err
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func ListTasks() {
+	d := connect()
+	err := d.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("MyTasks"))
+
+		fmt.Println("These are your current tasks:")
+		err := b.ForEach(func(k, v []byte) error {
+			fmt.Printf("%s \n", v)
+			return nil
+		})
 		if err != nil {
 			return err
 		}
 		return nil
 	})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
-
-	fmt.Println("returned in updateTasks in database.go")
-	return nil
 }
