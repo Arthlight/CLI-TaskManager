@@ -16,7 +16,6 @@ func connect() *bolt.DB {
 }
 
 func AddTask(s string) {
-	fmt.Println("in addTask in database.go")
 	d := connect()
 	defer func() {
 		err := d.Close()
@@ -33,13 +32,11 @@ func AddTask(s string) {
 }
 
 func handleTask(d *bolt.DB, s string) error {
-	fmt.Println("in handleTask in database.go")
 	err := d.Update(func(tx *bolt.Tx) error {
 		b, err := tx.CreateBucketIfNotExists([]byte("MyTasks"))
 		if err != nil {
 			return fmt.Errorf("create bucket: %s", err)
 		}
-		fmt.Println(s)
 		err = b.Put([]byte(s), []byte(s))
 		if err != nil {
 			return err
@@ -66,6 +63,14 @@ func DeleteTask(s string) {
 }
 
 func ListTasks() {
+	// b.ForEach panics if there are no keys in the bucket to iterate over,
+	// hence the deferred recover
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Oh, Seems like you have no tasks to do! Nice :)")
+		}
+	}()
+
 	d := connect()
 	err := d.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte("MyTasks"))

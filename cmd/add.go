@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"CLI-TaskManager/database"
-	"fmt"
 	"github.com/spf13/cobra"
 	"strings"
 )
@@ -21,9 +20,6 @@ var addCmd = &cobra.Command{
 			sb.WriteString(s + " ")
 		}
 		task := strings.TrimRight(sb.String(), "\t \n")
-		fmt.Println("in add.go")
-		fmt.Println(args)
 		database.AddTask(task)
-		fmt.Println("back in add.go")
 	},
 }
