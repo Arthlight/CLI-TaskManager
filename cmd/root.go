@@ -15,11 +15,20 @@ var (
 	userLicense string
 
 	rootCmd = &cobra.Command{
-		Use:   "cobra",
-		Short: "A generator for Cobra based Applications",
-		Long: `Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+		Use:   "task",
+		Short: "overview of task commands",
+		Long: `
+				tasks is a CLI for managing your TODOs.
+
+				Usage:
+  					task [command]
+
+				Available Commands:
+  					add         Add a new task to your TODO list
+  					do          Mark a task on your TODO list as complete
+  					list        List all of your incomplete tasks
+
+				Use "task [command] --help" for more information about a command.`,
 	}
 )
 

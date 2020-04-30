@@ -12,7 +12,7 @@ func init() {
 }
 
 var doCmd = &cobra.Command{
-	Use:   "do",
+	Use:   "task do",
 	Short: "mark a task as done",
 	Long:  "If you have completed a task, you can check it off",
 	Run: func(cmd *cobra.Command, args []string) {

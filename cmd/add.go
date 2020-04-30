@@ -11,7 +11,7 @@ func init() {
 }
 
 var addCmd = &cobra.Command{
-	Use:   "add",
+	Use:   "task add",
 	Short: "add a task to your list",
 	Long:  "If you come up with a task to do, add it to your list",
 	Run: func(cmd *cobra.Command, args []string) {

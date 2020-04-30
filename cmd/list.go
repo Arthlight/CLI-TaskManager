@@ -10,7 +10,7 @@ func init() {
 }
 
 var listCmd = &cobra.Command{
-	Use:   "list",
+	Use:   "task list",
 	Short: "display your task list",
 	Long:  "If you have task added to your list you can see them with this command",
 	Run: func(cmd *cobra.Command, args []string) {
