@@ -2,7 +2,6 @@ package main
 
 import (
 	db "CLI-TaskManager/database"
-	"fmt"
 	"CLI-TaskManager/cmd"
 	"github.com/mitchellh/go-homedir"
 	"path/filepath"
@@ -10,11 +9,10 @@ import (
 	"os"
 )
 
+
 func main() {
 	home, _ := homedir.Dir()
-	fmt.Println(home)
-	dbPath:= filepath.Join(home, "TaskManager.db")
-	fmt.Println(dbPath)
+	dbPath := filepath.Join(home, "TaskManager.db")
 	must(db.Init(dbPath))
 	must(cmd.Execute())
 }
